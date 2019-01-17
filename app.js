@@ -47,25 +47,16 @@ var htmlElements = {
 
 
 const key = 'Vlb8ghCOyURWJlLKsnh82oj1tgWNDDY1';
-let elementsArr = ['dog', 'cat'];
-let elementsArrRand = ['test1', 'test2', 'test3', 'test4'];
-let searchTerm = 'cat';
-let limit = 10;
+var elementsArr = ['dog', 'cat'];
+var elementsArrRand = ['test1', 'test2', 'test3', 'test4'];
+var searchTerm = 'cat';
+var limit = 10;
 
-let queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${searchTerm}&limit=${limit}&offset=0&rating=G&lang=en`
+var queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${searchTerm}&limit=${limit}&offset=0&rating=G&lang=en`
 
 
 
-var ajFN = function() {
-    $.ajax({
-    url: queryURL,
-    method:"GET"
-  }).then(function(response) {
-    console.log(response);
-    console.log(response.data[0].bitly_gif_url);
-  });
 
-};
 
 // Displays all elements and refreshes when single element is added
 var displayElements = function () {
@@ -124,9 +115,45 @@ var clearFields = function() {
     // $('#element-value').val('');
 }
 
-var displayGifs = function() {
+var ajFN = function() {
+    $.ajax({
+    url: queryURL,
+    method:"GET"
+  }).then(function(response) {
+    console.log(response);
+    console.log(response.data[0].bitly_gif_url);
+  });
 
-}
+};
+
+var displayGifs = function(searchBy) {
+    queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${searchBy}&limit=${limit}&offset=0&rating=G&lang=en`;
+    
+    $.ajax({
+        url: queryURL,
+        method:"GET"
+      }).then(function(response) {
+        console.log(response);
+        response.data.forEach((element, index) => {
+            var gifContainer = $("<div>");
+            gifContainer.addClass('d-inline gif-container');
+            
+            var gifText = $("<div>");
+            gifText.addClass('gif-text');
+            gifText.text('sample');
+
+            var gif = $("<img>");
+            gif.attr('src', response.data[index].url);
+            // gifContainer.text('sample');
+    
+            $(htmlElements.mainContainer).append(gifContainer);
+            $(gifContainer).append(gif);
+            $(gifContainer).append(gifText);
+        });
+        // GIF
+        // Rating
+      });
+};
 
 // Adding an item to the array
 $(document).on('click', htmlElements.addElement, function(){
@@ -154,10 +181,11 @@ $(document).on('click', htmlElements.clearScreen, function() {
 $(document).on('click', htmlElements.myButton, function() {
     var elementName = $(this).attr('data-name');
     console.log(elementName);
+    displayGifs(elementName);
 });
 
 displayElements();
-// ajFN();
+ajFN();
 
 // var title = "space+jam";
 // var queryURL = "https://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy";
