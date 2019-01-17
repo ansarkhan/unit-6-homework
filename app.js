@@ -39,7 +39,10 @@ var htmlElements = {
     addElement: '#add-element',
     addRandElement: '#add-rand-element',
     remElementValue: '#element-value-rem',
-    removeElement: '#remove-element'
+    removeElement: '#remove-element',
+    clearScreen: '#clear-screen',
+    mainContainer: '#main-container',
+    myButton: '.my-button',
 }
 
 
@@ -70,6 +73,7 @@ var displayElements = function () {
     elementsArr.forEach(element => {
         var elementBtn = $("<button>");
         elementBtn.addClass('btn btn-info my-button');
+        elementBtn.attr('data-name', element);
         elementBtn.text(element);
         $(htmlElements.listContainer).append(elementBtn);
 
@@ -111,16 +115,24 @@ var removeElem = function() {
     }
 }
 
-// MAKE THIS GENERIC
-var clearAddField = function() {
-    $('#element-value').val('');
+var clearScr = function() {
+    $(htmlElements.mainContainer).empty();
+}
+
+// MAKE THIS WORK FOR ALL FIELDS
+var clearFields = function() {
+    // $('#element-value').val('');
+}
+
+var displayGifs = function() {
+
 }
 
 // Adding an item to the array
 $(document).on('click', htmlElements.addElement, function(){
     addElem();
     displayElements();
-    clearAddField();
+    // clearField();
 });
 
 // Adding a random item to an array
@@ -133,6 +145,15 @@ $(document).on('click', htmlElements.addRandElement, function() {
 $(document).on('click', htmlElements.removeElement, function() {
     removeElem();
     displayElements();
+});
+
+$(document).on('click', htmlElements.clearScreen, function() {
+    clearScr();
+});
+
+$(document).on('click', htmlElements.myButton, function() {
+    var elementName = $(this).attr('data-name');
+    console.log(elementName);
 });
 
 displayElements();

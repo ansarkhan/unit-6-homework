@@ -16,7 +16,6 @@ To dos:
 
 // pause and play GIFs
 
-// clear screen button
 
 // Bonus material
 
