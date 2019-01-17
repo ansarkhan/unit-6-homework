@@ -9,3 +9,8 @@ body {
 .list-container {
 
 }
+
+/* top right bottom left */
+.my-button {
+  margin: 1rem 1rem 1rem 0rem;
+}

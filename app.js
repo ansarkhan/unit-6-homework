@@ -34,10 +34,14 @@ other endpoints: Random, Get by ID, Get by IDs
 
 */
 
-// import { key } from './config';
+var htmlElements = {
+    listContainer: '.list-container'
+}
+
 
 const key = 'Vlb8ghCOyURWJlLKsnh82oj1tgWNDDY1';
 let elementsArr = ['dog', 'cat'];
+let elementsArrRand = ['test1', 'test2', 'test3', 'test4'];
 let searchTerm = 'cat';
 let limit = 10;
 
@@ -58,6 +62,20 @@ var ajFN = function() {
 
 ajFN();
 
+var displayElements = function () {
+    $(htmlElements.listContainer).empty();
+    elementsArr.forEach(element => {
+        var elementBtn = $("<button>");
+        elementBtn.addClass('btn btn-info my-button');
+        elementBtn.text(element);
+        $(htmlElements.listContainer).append(elementBtn);
+
+    });
+
+
+
+};
+
 var addElem = function() {
     curElement = $('#element-value').val();
     if (elementsArr.indexOf(curElement) == -1) {
@@ -65,19 +83,22 @@ var addElem = function() {
     } else {
         console.log("element is already in array!");
     }
+    displayElements();
 
 }
 
+// MAKE THIS GENERIC
 var clearAddField = function() {
     $('#element-value').val('');
 }
 
+// Adding an item to the array
 $(document).on('click', '#add-element', function(){
     addElem();
     clearAddField();
 });
 
-
+displayElements();
 
 // var title = "space+jam";
 // var queryURL = "https://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy";

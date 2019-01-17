@@ -3,7 +3,7 @@
 To dos:
 
 // Create form in HTML
-  // Upon form submission, add value to array
+  // Upon form submission, add value to array - DONE
   // upon form submission, remove value from array
 
 // Array of all values
