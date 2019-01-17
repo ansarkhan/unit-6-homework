@@ -38,6 +38,8 @@ var htmlElements = {
     listContainer: '.list-container',
     addElement: '#add-element',
     addRandElement: '#add-rand-element',
+    remElementValue: '#element-value-rem',
+    removeElement: '#remove-element'
 }
 
 
@@ -80,22 +82,34 @@ var displayElements = function () {
 // Adds single element to array and calls displayElements();
 var addElem = function() {
     curElement = $('#element-value').val();
-    if (elementsArr.indexOf(curElement) == -1) {
-        elementsArr.push(curElement); 
-    } else {
-        console.log("element is already in array!");
+    if (curElement != '') {
+        if (elementsArr.indexOf(curElement) == -1) {
+            elementsArr.push(curElement); 
+        } else {
+            console.log("element is already in array!");
+        }
     }
-    displayElements();
 
 }
 
 var addRandElem = function() {
-    rand = Math.floor((Math.random() * elementsArrRand.length));
-    elementsArr.push(elementsArrRand[rand]);
-    //remove specific item in array;
-    displayElements();
+    if (elementsArrRand.length != 0) {
+        rand = Math.floor((Math.random() * elementsArrRand.length));
+        elementsArr.push(elementsArrRand[rand]);
+        elementsArrRand.splice(rand,1);
+    } else {
+        console.log("Sorry! All out of random elements");
+    }
+
 }
-// addRandElem();
+
+var removeElem = function() {
+    var elemRemove = $(htmlElements.remElementValue).val();
+    if (elemRemove != '') {
+        elemIndex = (elementsArr.indexOf(elemRemove));
+        elementsArr.splice(elemIndex, 1);
+    }
+}
 
 // MAKE THIS GENERIC
 var clearAddField = function() {
@@ -105,16 +119,24 @@ var clearAddField = function() {
 // Adding an item to the array
 $(document).on('click', htmlElements.addElement, function(){
     addElem();
+    displayElements();
     clearAddField();
 });
 
 // Adding a random item to an array
-$(document).on('click', htmlElements.addRandElem, function() {
+$(document).on('click', htmlElements.addRandElement, function() {
     addRandElem();
+    displayElements();
 })
 
+// Removing an item from the array
+$(document).on('click', htmlElements.removeElement, function() {
+    removeElem();
+    displayElements();
+});
+
 displayElements();
-ajFN();
+// ajFN();
 
 // var title = "space+jam";
 // var queryURL = "https://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy";
