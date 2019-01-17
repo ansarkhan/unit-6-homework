@@ -35,7 +35,9 @@ other endpoints: Random, Get by ID, Get by IDs
 */
 
 var htmlElements = {
-    listContainer: '.list-container'
+    listContainer: '.list-container',
+    addElement: '#add-element',
+    addRandElement: '#add-rand-element',
 }
 
 
@@ -58,10 +60,9 @@ var ajFN = function() {
     console.log(response.data[0].bitly_gif_url);
   });
 
-}
+};
 
-ajFN();
-
+// Displays all elements and refreshes when single element is added
 var displayElements = function () {
     $(htmlElements.listContainer).empty();
     elementsArr.forEach(element => {
@@ -76,6 +77,7 @@ var displayElements = function () {
 
 };
 
+// Adds single element to array and calls displayElements();
 var addElem = function() {
     curElement = $('#element-value').val();
     if (elementsArr.indexOf(curElement) == -1) {
@@ -87,18 +89,32 @@ var addElem = function() {
 
 }
 
+var addRandElem = function() {
+    rand = Math.floor((Math.random() * elementsArrRand.length));
+    elementsArr.push(elementsArrRand[rand]);
+    //remove specific item in array;
+    displayElements();
+}
+// addRandElem();
+
 // MAKE THIS GENERIC
 var clearAddField = function() {
     $('#element-value').val('');
 }
 
 // Adding an item to the array
-$(document).on('click', '#add-element', function(){
+$(document).on('click', htmlElements.addElement, function(){
     addElem();
     clearAddField();
 });
 
+// Adding a random item to an array
+$(document).on('click', htmlElements.addRandElem, function() {
+    addRandElem();
+})
+
 displayElements();
+ajFN();
 
 // var title = "space+jam";
 // var queryURL = "https://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy";
