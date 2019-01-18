@@ -12,7 +12,7 @@
 </head>
 <body>
     <main role="main" class="container">
-        <div class="row border border-primary">
+        <div class="row">
             <div class="col-12">
                 <h1>Giphy App</h1>
             </div>
@@ -21,21 +21,40 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-10 border border-primary rounded" id="main-container">
+            <div class="col-10" id="main-container">
                 <p>This container will hold the GIFs</p>
+                <!-- <div class='col-6 d-inline gif-container'>
+                    <img src="./images/test.png" class='img-fluid' alt="">
+                    <div class='gif-text d-inline'>
+                        <p>sample text</p>
+                    </div>
+                </div>
+                <div class='col-6 d-inline gif-container'>
+                        <img src="./images/test.png" class='img-fluid' alt="">
+                        <div class='gif-text d-inline'>
+                            <p>sample text</p>
+                        </div>
+                    </div> -->
+
             </div>
-            <div class="col-2 border border-warning rounded">
-                <p>This container will hold the sidebar</p>
-                <input type="text" id="element-value" placeholder="add element...">
-                <button type="button" class="btn btn-primary" id="add-element">submit</button>
-
-                <button type="button" class="btn btn-success" id="add-rand-element">add random element</button>
-
-                <input type="text" id="element-value-rem" placeholder="remove element...">
-                <button type="button" class="btn btn-danger" id="remove-element">submit</button>
-
-                <button type="button" class="btn btn-danger" id="clear-screen">clear screen</button>
-
+            <div class="col-2">
+                <h4>Menu</h4>
+                <div class="menu-container">
+                    <label for="element-value">Add an Element</label>
+                    <input type="text" id="element-value">
+                    <button type="button" class="btn btn-primary" id="add-element">Add</button>
+                </div>
+                <div class="menu-container">
+                    <button type="button" class="btn btn-success" id="add-rand-element">Add Random!</button>
+                </div>
+                <div class="menu-container">
+                    <label for="element-value">Remove an Element</label>
+                    <input type="text" id="element-value-rem">
+                    <button type="button" class="btn btn-danger" id="remove-element">Remove</button>
+                </div>
+                <div class="menu-container">
+                    <button type="button" class="btn btn-danger" id="clear-screen">Clear Screen</button>
+                </div>
             </div>
 
         </div>

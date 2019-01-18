@@ -14,3 +14,11 @@ body {
 .my-button {
   margin: 1rem 1rem 1rem 0rem;
 }
+
+.menu-container {
+  margin: 2rem 0rem 2rem 0rem;
+}
+
+#add-element, #remove-element{
+  margin-top: .5rem;
+}

@@ -127,8 +127,11 @@ var ajFN = function() {
 };
 
 var displayGifs = function(searchBy) {
+    // https://cors-anywhere.herokuapp.com/
     queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${searchBy}&limit=${limit}&offset=0&rating=G&lang=en`;
     
+    clearScr();
+
     $.ajax({
         url: queryURL,
         method:"GET"
@@ -136,14 +139,15 @@ var displayGifs = function(searchBy) {
         console.log(response);
         response.data.forEach((element, index) => {
             var gifContainer = $("<div>");
-            gifContainer.addClass('d-inline gif-container');
+            gifContainer.addClass('col-4 gif-container');
             
             var gifText = $("<div>");
             gifText.addClass('gif-text');
-            gifText.text('sample');
+            gifText.text(`Rating: ${response.data[index].rating}`);
 
-            var gif = $("<img>");
-            gif.attr('src', response.data[index].url);
+            var gif = $("<embed>");
+            gif.attr('src', response.data[index].embed_url);
+            gif.addClass('gif');
             // gifContainer.text('sample');
     
             $(htmlElements.mainContainer).append(gifContainer);

@@ -2,16 +2,9 @@
 
 To dos:
 
-// Create form in HTML
-  // Upon form submission, add value to array - DONE
-  // upon form submission, remove value from array
 
-// Array of all values
-
-// Onclick, API call to get results using value of button, clear old results
-
-// Container to display all the Gifs
-    // include rating
+// Container to display all the Gifs DONE
+    // include rating DONE
     // include other variables
 
 // pause and play GIFs
