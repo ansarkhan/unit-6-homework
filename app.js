@@ -34,6 +34,8 @@ other endpoints: Random, Get by ID, Get by IDs
 
 */
 
+// https://ansarkhan.github.io/unit-6-homework/
+
 var htmlElements = {
     listContainer: '.list-container',
     addElement: '#add-element',
@@ -204,15 +206,14 @@ $(document).on('click', htmlElements.clearScreen, function() {
     clearFields();
 });
 
-
+// Getting GIFs
 $(document).on('click', htmlElements.myButton, function() {
     var elementName = $(this).attr('data-name');
+    console.log(elementName);
     var containerElement = $(htmlElements.mainContainer).attr('data-name');
 
     if(containerElement == elementName) {
         displayGifs(elementName);
-        console.log("printing same");
-        // $(htmlElements.mainContainer).attr('data-name', '');
     } else {
         offset = 0;
         clearScr();
@@ -221,9 +222,10 @@ $(document).on('click', htmlElements.myButton, function() {
 
     $(htmlElements.mainContainer).attr('data-name', elementName);
 
-    clearFields();
 
 });
+
+
 
 // Playing and stopping
 $('body').on('click', '.gif', function() {
@@ -242,7 +244,7 @@ $('body').on('click', '.gif', function() {
   }
 });
 
-// MAKE THIS WORK FOR ALL FIELDS
+
 var clearFields = function(buttonName) {
     if (buttonName == 'add-element') {
         $('#element-value').val('');
@@ -252,4 +254,4 @@ var clearFields = function(buttonName) {
 }
 
 displayElements();
-ajFN();
+// ajFN();
