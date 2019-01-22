@@ -47,7 +47,7 @@ var htmlElements = {
 
 
 const key = 'Vlb8ghCOyURWJlLKsnh82oj1tgWNDDY1';
-var elementsArr = ['dog', 'cat'];
+var elementsArr = ['America', 'United Kingdom', 'Canada', 'Mexico', 'Spain', 'Argentina', 'Italy', 'Pakistan'];
 var elementsArrRand = ['test1', 'test2', 'test3', 'test4'];
 var searchTerm = 'cat';
 var limit = 10;
@@ -61,10 +61,15 @@ var queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${searchTe
 // Displays all elements and refreshes when single element is added
 var displayElements = function () {
     $(htmlElements.listContainer).empty();
-    elementsArr.forEach(element => {
+    elementsArr.forEach((element, index) => {
         var elementBtn = $("<button>");
-        elementBtn.addClass('btn btn-info my-button');
+        elementBtn.addClass('btn btn-dark my-button');
         elementBtn.attr('data-name', element);
+        // if (index % 2 == 0) {
+        //     elementBtn.addClass('btn-dark');
+        // } else {
+        //     elementBtn.addClass('btn-dark');
+        // }
         elementBtn.text(element);
         $(htmlElements.listContainer).append(elementBtn);
 
@@ -139,14 +144,15 @@ var displayGifs = function(searchBy) {
         console.log(response);
         response.data.forEach((element, index) => {
             var gifContainer = $("<div>");
-            gifContainer.addClass('col-4 gif-container');
+            gifContainer.addClass('col-3 gif-container d-inline-block');
             
             var gifText = $("<div>");
             gifText.addClass('gif-text');
             gifText.text(`Rating: ${response.data[index].rating}`);
 
-            var gif = $("<embed>");
-            gif.attr('src', response.data[index].embed_url);
+            var gif = $("<img>");
+            gif.attr('src', response.data[index].images.fixed_width_still.url);
+            // gif.attr('src', response.data[index].images.fixed_width.url); // this is the URL for the GIF
             gif.addClass('gif');
             // gifContainer.text('sample');
     
@@ -186,6 +192,23 @@ $(document).on('click', htmlElements.myButton, function() {
     var elementName = $(this).attr('data-name');
     console.log(elementName);
     displayGifs(elementName);
+});
+
+// Playing and stopping
+$('body').on('click', '.gif', function() {
+    // grabbing src of clicked element
+    var src = $(this).attr("src");
+    // console.log(src);
+    // replacing src based on regex and whether the GIF is playing or not
+  if($(this).hasClass('playing')){
+     //stop
+     $(this).attr('src', src.replace(/\.gif/i, "_s.gif"))
+     $(this).removeClass('playing');
+  } else {
+    //play
+    $(this).addClass('playing');
+    $(this).attr('src', src.replace(/\_s.gif/i, ".gif"))
+  }
 });
 
 displayElements();
