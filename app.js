@@ -43,7 +43,10 @@ var htmlElements = {
     remElementValue: '#element-value-rem',
     removeElement: '#remove-element',
     clearScreen: '#clear-screen',
+    clearFavorites: '#clear-favorites',
+    clearAll: '#clear-all',
     mainContainer: '#main-container',
+    favContainer: '#favorites-container',
     myButton: '.my-button',
 }
 
@@ -122,6 +125,10 @@ var clearScr = function() {
     $(htmlElements.mainContainer).empty();
 }
 
+var clearFav = function() {
+    $(htmlElements.favContainer).empty();
+}
+
 
 var ajFN = function() {
     $.ajax({
@@ -147,6 +154,7 @@ var displayGifs = function(searchBy) {
         response.data.forEach((element, index) => {
             var gifContainer = $("<div>");
             gifContainer.addClass('col-3 gif-container d-inline-block');
+            gifContainer.attr('id', index);
             
             var gifText = $("<div>");
             gifText.addClass('gif-text');
@@ -164,17 +172,17 @@ var displayGifs = function(searchBy) {
             gif.addClass('gif');
 
             var downloadURL = response.data[index].images.original.url;
-            var downloadBtn = $(`<a href=${downloadURL} download><img src='./images/download.png'></a>`);
+            var downloadBtn = $(`<a href=${downloadURL} download><img src='./images/download.png' class='d-inline-block'></a>`);
 
-
+            var favoriteBtn = $(`<img src='./images/heart.png' class='d-inline-block favorite-button' data-gif=${index}>`);
     
             $(htmlElements.mainContainer).append(gifContainer);
             $(gifContainer).append(gif);
             $(gifContainer).append(gifText);
             $(gifContainer).append(downloadBtn);
+            $(gifContainer).append(favoriteBtn);
         });
-        // GIF
-        // Rating
+
       });
 };
 
@@ -201,9 +209,19 @@ $(document).on('click', htmlElements.removeElement, function() {
     clearFields(thisBtn);
 });
 
+//clear screen
 $(document).on('click', htmlElements.clearScreen, function() {
     clearScr();
     clearFields();
+});
+
+$(document).on('click', htmlElements.clearFavorites, function() {
+    clearFav();
+});
+
+$(document).on('click', htmlElements.clearAll, function() {
+    clearFav();
+    clearScr();
 });
 
 // Getting GIFs
@@ -221,10 +239,22 @@ $(document).on('click', htmlElements.myButton, function() {
     }
 
     $(htmlElements.mainContainer).attr('data-name', elementName);
+    $('#favorites-heading').removeClass('hide');
 
 
 });
 
+
+$(document).on('click', '.favorite-button', function() {
+    favID = $(this).attr('data-gif');
+
+    addFav = $('#'+favID).clone();
+    addFav.removeClass('col-3');
+    addFav.addClass('favorites-gif')
+
+    $('#favorites-container').append(addFav);
+
+});
 
 
 // Playing and stopping
@@ -254,4 +284,4 @@ var clearFields = function(buttonName) {
 }
 
 displayElements();
-ajFN();
+// ajFN();
