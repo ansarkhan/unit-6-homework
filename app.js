@@ -148,13 +148,23 @@ var displayGifs = function(searchBy) {
             
             var gifText = $("<div>");
             gifText.addClass('gif-text');
-            gifText.text(`Rating: ${response.data[index].rating}`);
+            var title = response.data[index].title;
+            var shortTitle = title.substring(0, title.indexOf("GIF"));
+
+            var rating = response.data[index].rating;
+            gifText.html(`<b>Title:</b> ${shortTitle}
+            <br>
+            <b>Rating:</b> ${rating}`);
 
             var gif = $("<img>");
             gif.attr('src', response.data[index].images.fixed_width_still.url);
             // gif.attr('src', response.data[index].images.fixed_width.url); // this is the URL for the GIF
             gif.addClass('gif');
-            // gifContainer.text('sample');
+            // gifContainer.text('sample'); 
+
+//             <div class="card" style="width: 18rem;">
+//   <img class="card-img-top" src="..." alt="Card image cap">
+//   <div class="card-body"></div>
     
             $(htmlElements.mainContainer).append(gifContainer);
             $(gifContainer).append(gif);

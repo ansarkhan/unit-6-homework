@@ -22,3 +22,7 @@ body {
 #add-element, #remove-element{
   margin-top: .5rem;
 }
+
+.gif-container {
+  margin: 0rem 0rem 1rem 0rem;
+}
