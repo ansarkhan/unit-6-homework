@@ -47,10 +47,11 @@ var htmlElements = {
 
 
 const key = 'Vlb8ghCOyURWJlLKsnh82oj1tgWNDDY1';
-var elementsArr = ['America', 'United Kingdom', 'Canada', 'Mexico', 'Spain', 'Argentina', 'Italy', 'Pakistan'];
-var elementsArrRand = ['test1', 'test2', 'test3', 'test4'];
+var elementsArr = ['America', 'United Kingdom', 'Canada', 'Mexico', 'Spain', 'Argentina', 'Italy', 'Pakistan', 'Germany', 'Ethiopia'];
+var elementsArrRand = ['Armenia', 'Austria', 'Barbados', 'Benin', 'Botswana', 'Brunei', 'Burundi', 'Chad', 'Croatia', 'Cyprus', 'Denmark', 'Fiji', 'Finland'];
 var searchTerm = 'cat';
 var limit = 10;
+var offset = 0;
 
 var queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${searchTerm}&limit=${limit}&offset=0&rating=G&lang=en`
 
@@ -107,7 +108,11 @@ var removeElem = function() {
     var elemRemove = $(htmlElements.remElementValue).val();
     if (elemRemove != '') {
         elemIndex = (elementsArr.indexOf(elemRemove));
-        elementsArr.splice(elemIndex, 1);
+        if (elemIndex != -1) {
+            elementsArr.splice(elemIndex, 1);
+        } else {
+            console.log("That element does not exist");
+        }
     }
 }
 
@@ -115,10 +120,6 @@ var clearScr = function() {
     $(htmlElements.mainContainer).empty();
 }
 
-// MAKE THIS WORK FOR ALL FIELDS
-var clearFields = function() {
-    // $('#element-value').val('');
-}
 
 var ajFN = function() {
     $.ajax({
@@ -132,10 +133,9 @@ var ajFN = function() {
 };
 
 var displayGifs = function(searchBy) {
-    // https://cors-anywhere.herokuapp.com/
-    queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${searchBy}&limit=${limit}&offset=0&rating=G&lang=en`;
-    
-    clearScr();
+    queryURL = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=${searchBy}&limit=${limit}&offset=${offset}&rating=G&lang=en`;
+
+    offset += 10;
 
     $.ajax({
         url: queryURL,
@@ -160,15 +160,16 @@ var displayGifs = function(searchBy) {
             gif.attr('src', response.data[index].images.fixed_width_still.url);
             // gif.attr('src', response.data[index].images.fixed_width.url); // this is the URL for the GIF
             gif.addClass('gif');
-            // gifContainer.text('sample'); 
 
-//             <div class="card" style="width: 18rem;">
-//   <img class="card-img-top" src="..." alt="Card image cap">
-//   <div class="card-body"></div>
+            var downloadBtn = $("<span>");
+            downloadBtn.html("<span class='glyphicon glyphicon-download' aria-hidden='true'></span>");
+
+
     
             $(htmlElements.mainContainer).append(gifContainer);
             $(gifContainer).append(gif);
             $(gifContainer).append(gifText);
+            $(gifContainer).append(downloadBtn);
         });
         // GIF
         // Rating
@@ -177,8 +178,10 @@ var displayGifs = function(searchBy) {
 
 // Adding an item to the array
 $(document).on('click', htmlElements.addElement, function(){
+    var thisBtn = $(this).attr('id');
     addElem();
     displayElements();
+    clearFields(thisBtn);
     // clearField();
 });
 
@@ -190,18 +193,36 @@ $(document).on('click', htmlElements.addRandElement, function() {
 
 // Removing an item from the array
 $(document).on('click', htmlElements.removeElement, function() {
+    var thisBtn = $(this).attr('id');
     removeElem();
     displayElements();
+    clearFields(thisBtn);
 });
 
 $(document).on('click', htmlElements.clearScreen, function() {
     clearScr();
+    clearFields();
 });
+
 
 $(document).on('click', htmlElements.myButton, function() {
     var elementName = $(this).attr('data-name');
-    console.log(elementName);
-    displayGifs(elementName);
+    var containerElement = $(htmlElements.mainContainer).attr('data-name');
+
+    if(containerElement == elementName) {
+        displayGifs(elementName);
+        console.log("printing same");
+        // $(htmlElements.mainContainer).attr('data-name', '');
+    } else {
+        offset = 0;
+        clearScr();
+        displayGifs(elementName);
+    }
+
+    $(htmlElements.mainContainer).attr('data-name', elementName);
+
+    clearFields();
+
 });
 
 // Playing and stopping
@@ -221,53 +242,14 @@ $('body').on('click', '.gif', function() {
   }
 });
 
+// MAKE THIS WORK FOR ALL FIELDS
+var clearFields = function(buttonName) {
+    if (buttonName == 'add-element') {
+        $('#element-value').val('');
+    } else if (buttonName == 'remove-element') {
+        $('#element-value-rem').val('');
+    }
+}
+
 displayElements();
 ajFN();
-
-// var title = "space+jam";
-// var queryURL = "https://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy";
-
-// $.ajax({
-//   url: queryURL,
-//   method: "GET"
-// }).then(function(response) {
-//   console.log(response);
-//   console.log(response.Runtime);
-// });
-// // ---------------------------------------------------------
-
-// console.log("This console.log will probably happen first because of asynchronicity.");
-// var x = 2;
-// var y = 10;
-// var z = 13;
-// console.log("We can also assign some variables and do some arithmetic while we wait too: 2 + 10 + 13 = ", x + y + z);
-
-
-// var user = {
-// 	name: 'Gabe',
-// 	//arrow functions do not bind "this". This points to global object
-// 	// Does not bind arguments array to the function, End up getting the Global Arguments Variable
-// 	//Makes sense because in a arrow function "This" points to the Global object
-// 	sayHi: () => {
-// 		console.log('Hi');
-// 		console.log(`Hi. I'm ${this.name}`); // Will not work. Points to Global Object
-// 		console.log(arguments);
-// 	},
-// 	//regular function.  Binds "this".  This will work
-// 	//Binds arguments array to the function
-// 	sayHiAlt: function() {
-// 		console.log(`Hi. I'm ${this.name}`);
-// 		console.log(arguments);
-// 	},
-
-// 	//es6 function syntax.  Just another way to write a method in a object. Binds "this". This will work
-// 	//Binds arguments array to the function
-// 	sayHiAlt2() {
-// 		console.log(`Hi. I'm ${this.name}`);
-// 		console.log(arguments);
-// 	}
-// };
-
-// user.sayHi(1, 2);
-// user.sayHiAlt(3, 4);
-// user.sayHiAlt2(5, 6);
