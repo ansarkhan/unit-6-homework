@@ -40,6 +40,7 @@ var htmlElements = {
     listContainer: '.list-container',
     addElement: '#add-element',
     addRandElement: '#add-rand-element',
+    elementValue: '#element-value',
     remElementValue: '#element-value-rem',
     removeElement: '#remove-element',
     clearScreen: '#clear-screen',
@@ -48,6 +49,8 @@ var htmlElements = {
     mainContainer: '#main-container',
     favContainer: '#favorites-container',
     myButton: '.my-button',
+    favoritesHeading: '#favorites-heading',
+    favoritesContainer: '#favorites-container'
 }
 
 
@@ -87,7 +90,7 @@ var displayElements = function () {
 
 // Adds single element to array and calls displayElements();
 var addElem = function() {
-    curElement = $('#element-value').val();
+    curElement = $(htmlElements.elementValue).val();
     if (curElement != '') {
         if (elementsArr.indexOf(curElement) == -1) {
             elementsArr.push(curElement); 
@@ -239,7 +242,7 @@ $(document).on('click', htmlElements.myButton, function() {
     }
 
     $(htmlElements.mainContainer).attr('data-name', elementName);
-    $('#favorites-heading').removeClass('hide');
+    $(htmlElements.favoritesHeading).removeClass('hide');
 
 
 });
@@ -252,7 +255,7 @@ $(document).on('click', '.favorite-button', function() {
     addFav.removeClass('col-3');
     addFav.addClass('favorites-gif')
 
-    $('#favorites-container').append(addFav);
+    $(htmlElements.favoritesContainer).append(addFav);
 
 });
 
@@ -277,9 +280,9 @@ $('body').on('click', '.gif', function() {
 
 var clearFields = function(buttonName) {
     if (buttonName == 'add-element') {
-        $('#element-value').val('');
+        $(htmlElements.elementValue).val('');
     } else if (buttonName == 'remove-element') {
-        $('#element-value-rem').val('');
+        $(htmlElements.remElementValue).val('');
     }
 }
 
