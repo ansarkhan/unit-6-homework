@@ -49,7 +49,7 @@ var htmlElements = {
 
 
 const key = 'Vlb8ghCOyURWJlLKsnh82oj1tgWNDDY1';
-var elementsArr = ['America', 'United Kingdom', 'Canada', 'Mexico', 'Spain', 'Argentina', 'Italy', 'Pakistan', 'Germany', 'Ethiopia'];
+var elementsArr = ['America', 'United Kingdom', 'Canada', 'Mexico', 'Spain', 'Argentina', 'Italy', 'Pakistan', 'India', 'Germany', 'Ethiopia'];
 var elementsArrRand = ['Armenia', 'Austria', 'Barbados', 'Benin', 'Botswana', 'Brunei', 'Burundi', 'Chad', 'Croatia', 'Cyprus', 'Denmark', 'Fiji', 'Finland'];
 var searchTerm = 'cat';
 var limit = 10;
@@ -163,8 +163,8 @@ var displayGifs = function(searchBy) {
             // gif.attr('src', response.data[index].images.fixed_width.url); // this is the URL for the GIF
             gif.addClass('gif');
 
-            var downloadBtn = $("<span>");
-            downloadBtn.html("<span class='glyphicon glyphicon-download' aria-hidden='true'></span>");
+            var downloadURL = response.data[index].images.original.url;
+            var downloadBtn = $(`<a href=${downloadURL} download><img src='./images/download.png'></a>`);
 
 
     
@@ -254,4 +254,4 @@ var clearFields = function(buttonName) {
 }
 
 displayElements();
-// ajFN();
+ajFN();
